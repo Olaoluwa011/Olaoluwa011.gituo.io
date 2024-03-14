@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evSXLWZRyI7SLtAoQHuAI2i7F8vHssHy/TmVuQ5+tYnUlctRCQvQ6b9jvHh/uFA" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Product Registration</h1>
+        <p>Register for your account to access our amazing product!</p>
+        <form id="registration-form">
+            <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" required>
+            </div>
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <span class="text-muted">Password must contain a special character (! or ?)</span>
+            </div>
+            <div class="mb-3">
+                <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <div id="registration-message" class="mt-3"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $("#registration-form").submit(function(event) {
+                event.preventDefault();
+
+                // Get user input
+                const firstName = $("#firstName").val();
+                const lastName = $("#lastName").val();
+                const email = $("#email").val();
+                const password = $("#password").val();
+                const dateOfBirth = $("#dateOfBirth").val();
+
+                // Validate password
+                const hasSpecialChar = password.includes("!") || password.includes("?");
+                if (!hasSpecialChar) {
+                    $("#registration-message").text("Error: Password must contain a special character (! or ?)");
+                    return;
+                }
+
+                // Create user object
+                const user = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password.replace(/./g, "*"), // Replace password with asterisks
+                    dateOfBirth: dateOfBirth
+                };
+
+                // Display registration success message with user info (password replaced with asterisks)
+                $("#registration-message").html(`
+                    <p>Registration successful!</p>
+                    <ul>
+                        <li>First Name: ${user.firstName}</li>
+                        <li>Last Name: ${user.lastName}</li>
+                        <li>Email: ${user.email}</li>
+                        <li>Password: ${user.password} (hidden for security)</li>
+                        <li>Date of Birth: ${user.dateOfBirth}</li>
+                    </ul>
+                `);
+            });
