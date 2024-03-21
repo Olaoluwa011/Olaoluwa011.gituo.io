@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Our Store!</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Get the current date
+    const today = new Date();
+    
+    // Function to greet the customer based on time
+    function greetCustomer(hour) {
+      let greeting;
+      if (hour < 12) {
+        greeting = "Good Morning";
+      } else if (hour < 17) {
+        greeting = "Good Afternoon";
+      } else {
+        greeting = "Good Evening";
+      }
+      return greeting;
+    }
+    
+    // Get customer information
+    const name = prompt("What is your name?");
+    const item = prompt("What item would you like to order?");
+    const quantity = parseInt(prompt("How many would you like? (1-99)"));
+    
+    // Check for valid quantity input
+    if (isNaN(quantity) || quantity < 1 || quantity > 99) {
+      alert("Please enter a valid quantity between 1 and 99.");
+    } else {
+      // Calculate arrival date (7 days from today)
+      const arrivalDate = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
+      
+      // Format the date for display
+      const formattedArrivalDate = arrivalDate.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      
+      // Display the order details
+      document.write(`<p>${greetCustomer(today.getHours())}, ${name}!</p>`);
+      document.write(`<p>Thank you for ordering ${quantity} ${item}(s).</p>`);
+      document.write(`<p>Your expected arrival date is ${formattedArrivalDate}.</p>`);
+    }
+  </script>
+</body>
+</html>
